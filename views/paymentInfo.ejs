@@ -1,0 +1,48 @@
+<!-- StudentFee info-->
+<div class="col-md-12">
+	<div class="row no-padding">
+		<h3>Fee Details :</h3>
+	</div>
+	<table class="table table-condensed" style="width:50%;">
+		<tbody>
+			<% for (var i=0; i<result.courseFee.fee.length;i++){
+				%>
+				<tr>
+					<th><%= result.courseFee.fee[i].paymentMode%></th>
+					<td><%= result.courseFee.fee[i].paymentAmount%></td>
+				</tr>
+				<%}%>
+				<tr class="text-success">
+					<th >Total Fee: </th>
+					<td><%= result.courseFee.annualFee%></td>
+				</tr>
+		</tbody>
+	</table>
+
+</div>
+
+<!-- StudentFee paid info-->
+<div class="col-md-12">
+<div class="row no-padding">
+		<h3>Payment Details :</h3>
+	</div>
+<table class="table table-condensed" style="width:80%;">
+	<thead>
+		<tr>
+			<th>Payment For</th>
+			<th>Paid Amount</th>
+			<th>Paid Date</th>
+		</tr>
+	</thead>
+		<tbody>
+			<% for (var i=0; i<paidInfo.length;i++){
+				%>
+				<tr>
+					<th class="text-success"><%= paidInfo[i].paymentMode%></th>
+					<td><%= paidInfo[i].amount%></td>
+					<td><%= paidInfo[i].date%></td>
+				</tr>
+				<%}%>
+		</tbody>
+	</table>	
+</div>

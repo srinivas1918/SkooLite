@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>AdminLTE 2 | Dashboard</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- Bootstrap 3.3.4 -->
+    <% include commons/css.ejs %>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/dataTables.bootstrap.css">
+  </head>
+
+  <body class="skin-blue sidebar-mini">
+    <div class="wrapper">
+
+      <!-- Main Header -->
+      <% include commons/header.ejs %>
+      <!-- Left side column. contains the logo and sidebar -->
+     <% include commons/sidebar.ejs %>
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+       
+
+        <!-- Main content -->
+        <section class="content">
+        	<div class="row">
+            <% for (var i=0; i<result.length; i++){%>
+        		<div class="col-md-4">
+        			<div class="box box-success">
+        				<div class="box-header with-border">
+        					<h3 class="box-title"><%= result[i].course%>-Class
+                   ( Registrations :<%= result[i].strength%> )
+
+                  </h3>
+        				</div><!-- header -->
+
+        				<div class="box-body no-padding">
+
+        					<!-- <div class="info-box bg-yellow" style="min-height:0px;margin-left: 0px;margin-bottom:3px;">
+               <div class="icon">
+                          <span class="glyphicon glyphicon-book"></span>
+                    </div>   
+				                <div class="info-box-content" >
+                          
+				                  <span class="info-box-text">Inventory</span>
+				                  <span class="info-box-number">5,200</span>				                 
+				                </div><!-- /.info-box-content -->
+                        <div class="small-box bg-yellow no-padding" style="margin-bottom:2px;">
+               
+                            <div class="inner">
+                            <div class="row">
+                             <div class="col-md-2" style="padding-right: 0px;">
+                             <span class="fa fa-book fa-lg"></span>                  
+                               </div>        
+                               <div class="col-md-9 no-padding">            
+                            <span style=""><p><%=result[i] %> : 15000</p></span>
+                             </div>
+                             </div>
+                            </div>
+              				</div>
+                      <div class="small-box bg-green no-padding" style="">
+               
+                            <div class="inner">
+                            <div class="row">
+                             <div class="col-md-2" style="padding-right: 0px;">
+                             <span class="fa fa-book fa-lg"></span>                  
+                               </div>        
+                               <div class="col-md-9 no-padding">            
+                            <span style=""><p>User Registrations : 15000</p></span>
+                             </div>
+                             </div>
+                            </div>
+                      </div>
+        				</div>
+        			</div>
+        		</div>
+            <% }%>
+        	</div>
+
+        </section>
+
+    </div>
+    <% include commons/footer.ejs %>
+</div>
+	 <% include commons/scripts.ejs %>
+	 <script type="text/javascript">
+	 $(function(){
+	 	$("#feeInfoLi").addClass('active');
+	 })
+	 </script>
+</body>
+
+</html>
