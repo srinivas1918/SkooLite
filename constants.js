@@ -18,7 +18,7 @@ var config={
 		SchedTime:null,
 		GroupId:null
 	},
-	URL:"XXXXX,
+	URL:"XXXXX"",
 
 
 	// View page name that will be rendered to web client
