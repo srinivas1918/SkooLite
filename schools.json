@@ -1,0 +1,25 @@
+{
+	"schoolName":"Ravindra Bharathi",
+	"location":"visakhapatanam",
+	"address":"wall street, USA.",
+	"phone":"9441469449",
+	"contactPerson":"N.Srinivas",
+	"username":"srinivas",
+	"password":"srinivas",
+	"regDate":new Date(),
+	"group":"Ravindra Bharthi group of insitutes",
+	"code":"RVB",
+	"feeType":[
+                "Education",
+                "Transport"
+        ],
+    
+}
+
+
+// sequence 5635e3e8cc67811baf92ee0e
+
+{
+	schools:[{school_id:5635e3e8cc67811baf92ee0e,I:0,II:0III:0, }]
+
+}
