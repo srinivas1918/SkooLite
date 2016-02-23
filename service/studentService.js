@@ -111,7 +111,8 @@ StudentService.prototype.searchStudent=function(data,callback){
 	var query={studentName:{$regex:new RegExp(data.studentName, 'ig')}};
 	query.school_id=data.school_id;
 	console.log(query);
-	db.collection("students").find(query).limit(config.resultsLimit).toArray(function(err,result){
+	var project={_id:1,studentName:1,section:1,classLevel:1,photoPath:1}
+	db.collection("students").find(query,project).limit(config.resultsLimit).toArray(function(err,result){
 		if(err){
 			return callback(new Error("Db excetpion"));
 		}
@@ -207,6 +208,18 @@ StudentService.prototype.addStudentFeeInfo=function(data,_id,callback){
 			return callback(err);
 		}
 		return callback(null,result);
+	});
+};
+
+StudentService.prototype.getNameAndPhone=function(studentId,callback){
+	var criteria={_id:dbOparations.helper.toObjectID(studentId)};
+	var project={contact:1,studentName:1};
+	db.collection("students").findOne(criteria,project,function(err, result){
+		if(err){
+			return callback(err);
+		}else{
+			return callback(null, result);
+		}
 	});
 }
 module.exports=new StudentService();

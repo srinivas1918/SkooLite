@@ -28,11 +28,12 @@ FeeInfoService.prototype.getStudentPaidFeeInfo=function(studentId,callback){
 
 	var _id={_id:dbOparations.helper.toObjectID(studentId)};
 	var unwind={$unwind:"$payments"};
-	var group={$group:{_id:{paymentMode:"$payments.paymentMode",paidDate:"$payments.paymentDate"},
+	var sort={"$sort":{"payments.paymentId":-1}};
+	var group={$group:{_id:"$payments.paymentMode",paidDate:{$max:"$payments.paymentDate"},
 				paidAmount:{$sum:"$payments.paymentAmount"}}};
-	var project={$project:{_id:0,"paymentMode":"$_id.paymentMode","amount":"$paidAmount",
-					"date":"$_id.paidDate"}};			
-	db.collection('students').aggregate([{$match:_id},unwind,group,project],function(err,result){
+	var project={$project:{_id:0,"paymentMode":"$_id","amount":"$paidAmount",
+					"date":"$paidDate"}};			
+	db.collection('students').aggregate([{$match:_id},unwind,sort,group,project],function(err,result){
 		if(err){
 			return callback(err);
 		}
@@ -71,7 +72,7 @@ FeeInfoService.prototype.getStrengthForSchool=function(school_id,callback) {
 FeeInfoService.prototype.getStudentPaymentInfo=function(student_id,callback){
 
 	var criteria={_id:dbOparations.helper.toObjectID(student_id)};
-	var project={payments:1};
+	var project={payments:1,amountPaid:1,annualFee:1};
 
 	db.collection("students").findOne(criteria,project,function(err,result){
 		if(err){
