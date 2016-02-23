@@ -12,9 +12,10 @@ var config=require("../constants.js");
 /* Importing Application required services */
 var studentService=require("../service/studentService.js");
 var feeInfoService=require('../service/feeInfoService.js');
+var sms_notifier=require('../utils/messaging/sms-sender.js');
 // Authentication Middleware works here
 router.use(function(req,resp,next){
-	
+
 	if(req.session.school==undefined){
 		var redirectUrl=req.originalUrl;
 		req.session.redirectUrl=req.originalUrl;
@@ -34,11 +35,11 @@ router.get("/regStudent",function(req,res,next){
 	// get previous registered students of the current day.
 	var todayDate=moment(new Date()).format("DD-MM-YYYY");
 	var query={regDate:todayDate};
-	
+
 	var feeCategories=req.session.school.feeType;
 
 	studentService.findStudentsByDate(query,function(err,result){
-		
+
 		if(err){
 			res.render('studentRegForm',{message:false,err:err});
 		}
@@ -94,12 +95,28 @@ router.post("/submitStudent",function(req,res,next){
 			res.json({message:false,err:err});
 		}
 		else{
+			//sending sms once registration done.
+			var message="Please enter the below authentication code for verifying mobile number: "+
+						  result[0].sec_code;
+			var dataObject={};
+			dataObject.Account=config.credentials;
+
+			var msgObject={};
+			msgObject.Number=result[0].contact;
+			msgObject.Text=message;
+
+			var messages=[];
+			messages.push(msgObject);
+			dataObject.Messages=messages;
+			//console.log("=====Data Object====== ");
+			//console.log(JSON.stringify(dataObject));
+			sms_notifier.sendMessage(JSON.stringify(dataObject));
 			res.json({message:true,result:result});
-			console.log(JSON.stringify(result));
-		}		
+
+		}
 
 	});
-		
+
 });
 
 // students list for dashboard
@@ -132,24 +149,26 @@ router.post('/searchStudent',function(req,resp,next){
 		//var searchResult=prepareHtmlString(result);
 		resp.send(result);
 	})
-	
+
 });
 
 /** URL: localhost:3000/admin/_id
 *	Here, _id is param.
 */
 router.get("/findStudent/:_id",function(req,resp,next){
-	
+
 	studentService.findStudentById(req.params._id, function(err,result){
 		if(err){
-			resp.render(confi.studentInfo,{status:false,result:result});
+			resp.render(config.studentInfo,{status:false,result:result});
 		}
 		if(result==null){
 			resp.render(config.studentInfo,{status:false,result:result});
 		}else{
+			console.log("==========================");
+			resp.set('Content-Type', 'text/plain');
 			resp.render(config.studentInfo,{status:true,result:result});
 		}
-		
+
 	})
 });
 
@@ -172,22 +191,29 @@ router.get("/makePaymentForStudent/:_id",function(req,resp,next){
 
 router.post('/savePayment',function(req,resp,next){
 	console.log(req.body);
-	var todayDate=moment(new Date()).format("DD-MM-YYYY");
-	req.body.paymentDate=todayDate;
+	var studentId=req.body.studentId;
+	//var todayDate=new Date();
+	req.body.paymentDate=new Date();
 	req.body.paymentAmount=Number(req.body.paymentAmount);
 	var notify=req.body.notify;
 	if(notify==0){
 			req.body.nextDueDate=todayDate;
 	}
-	req.body.notify=0 // always off once payment done.	
+	req.body.notify=0 // always off once payment done.
 	studentService.savePayment(req.body,function(err,result){
 		if(err){
 			resp.json({status:false})
 		}
+		else{
+			req.body.studentId=studentId;
+			sms_notifier.sendPaymentMessage(req.body,function(message){
+				sms_notifier.sendMessage(message);
+			});
+			resp.json({status:true,result:result});
+		}
 
-		resp.json({status:true,result:result});
 	})
-	
+
 })
 
 router.get("/courseFeeDetails/:course",function(req,resp,next){
@@ -206,7 +232,7 @@ router.get("/courseFeeDetails/:course",function(req,resp,next){
 			resp.json({status:false,err:message});
 		}else{
 			resp.json({status:true,result:result.courseFee});
-		}	
+		}
 	})
 })
 
@@ -248,7 +274,7 @@ router.post("/saveFeeDetails/:studentId",function(req,resp,next){
 
 	}); // end feeInfo Service
 
-	
+
 });
 
 router.post('/addStudentFeeInfo',function(req,resp,next){
@@ -263,9 +289,9 @@ router.post('/addStudentFeeInfo',function(req,resp,next){
 		if(err){
 			resp.json({status:false,result:err})
 		}
-		resp.json({status:true,result:result});	
+		resp.json({status:true,result:result});
 	})
-	
+
 });
 
 function errorHandler(err,req,resp,next){
