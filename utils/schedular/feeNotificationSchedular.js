@@ -19,6 +19,7 @@ var feeNotificationSchedular=function(){
 		rule.second = 30;
 		cron.scheduleJob(rule, function(){
   			  console.log(new Date(), 'The 30th second of the minute.');
+  			  //TODO: need to write actual code for pending and device notification
   			  studentService.isStudentExists({gender:"Male"},function(err, result){
   			  	if(err){
   			  		console.log(err);
