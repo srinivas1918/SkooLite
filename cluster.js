@@ -1,3 +1,9 @@
+/**
+ * @author: Nalla Srinivas
+ * @Desc: This file contains code for sharing http port by the number of cores. @see standered code for cluster
+ *         <code><a href="https://nodejs.org/api/cluster.html#cluster_how_it_works">How it works</a></code>
+ */
+
 var cluster = require('cluster');
 var numCPUs = require('os').cpus().length;
 
