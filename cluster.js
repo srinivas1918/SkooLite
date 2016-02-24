@@ -29,7 +29,7 @@ var feeNotifier=require("./utils/schedular/feeNotificationSchedular.js");
     });
 } else {
 
-    //change this line to Your Node.js app entry point.
+    
     require("./app.js");
     
 }
