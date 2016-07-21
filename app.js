@@ -15,6 +15,9 @@ var events=require('./routes/events');
 var dbInstance=require("./db.js").dbOparations.db;
 var app = express();
 
+//server port and ip addr
+var PORT = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var IPADDRESS = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -69,7 +72,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.listen(3000,function(){
-  console.log("server started at :"+3000);
+app.listen(PORT,IPADDRESS,function(){
+  console.log("server started at :"+PORT);
 })
 module.exports = app;
