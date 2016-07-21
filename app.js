@@ -17,7 +17,7 @@ var app = express();
 
 //server port and ip addr
 var PORT = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-var IPADDRESS = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var IPADDRESS = process.env.OPENSHIFT_NODEJS_IP || 'localhost';
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
