@@ -7,7 +7,7 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
   process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +'saima'
 }
-var db = mongoskin.db(connection_string, {safe:true});
+var db = mongoskin.db('mongodb://'+connection_string, {safe:true});
 var helper=mongoskin.helper;
 
 var dbOparations={db:db,helper:helper};
