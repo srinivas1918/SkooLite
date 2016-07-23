@@ -18,7 +18,7 @@ var config={
 		SchedTime:null,
 		GroupId:null
 	},
-	URL:"http://login.smsgatewayhub.com/RestAPI/MT.svc/mt",
+	URL:"XXXX",
 
 
 	// View page name that will be rendered to web client
