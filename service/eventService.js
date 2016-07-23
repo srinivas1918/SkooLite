@@ -16,4 +16,24 @@ EventService.prototype.saveEvent = function(eventObject,callback) {
 	});
 };
 
+EventService.prototype.listEvents=function(obj,callback){
+
+	db.collection.find(obj,function(err,result){
+
+		if(err){
+			return callback(new Error("Database err"))
+		}else{
+			return callback(null,result);
+		}
+	});
+}
+
+EventService.prototype.getEventByDate=function(obj,callback){
+	db.collection('events').find(obj).toArray(function(err,result){
+		if(err)
+			return callback(new Error("Database Error"))
+		else
+			return callback(null,result);
+	})
+}
 module.exports=new EventService();

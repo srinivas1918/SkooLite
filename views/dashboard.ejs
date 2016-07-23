@@ -11,6 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Bootstrap 3.3.4 -->
     <% include commons/css.ejs %>
     <link rel="stylesheet" type="text/css" href="/bootstrap/css/dataTables.bootstrap.css">
+
   </head>
   <!--
   BODY TAG OPTIONS:
@@ -32,7 +33,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   |               | sidebar-mini                            |
   |---------------------------------------------------------|
   -->
+  
   <body class="skin-blue sidebar-mini">
+    
     <div class="wrapper">
 
       <!-- Main Header -->
@@ -146,6 +149,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED JS SCRIPTS -->
 
       <% include commons/scripts.ejs %>
+     
       <script type="text/javascript" src="/dashboard.js"></script>
       <script type="text/javascript" src="/bootstrap/js/jquery.dataTables.min.js"></script>
       <script type="text/javascript" src="/bootstrap/js/dataTables.bootstrap.min.js"></script>
@@ -167,5 +171,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     }
                 });
        </script>
+       <script type="text/javascript">
+$(window).load(function() {
+  $(".loader").fadeOut("slow");
+})
+</script>
       </body>
 </html>

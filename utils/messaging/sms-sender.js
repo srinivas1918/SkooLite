@@ -28,8 +28,8 @@ SMSHelper.prototype.sendMessage = function(object,callback) {
  				 data: object,
   				 headers:{"Content-Type": "application/json"} 
 				};
-		//console.log("Url :"+config.URL);
-		//console.log(args);		
+		console.log("Url :"+config.URL);
+		console.log(args);		
 		var req=	client.post(config.URL, args, function(data,response) {
   			// parsed response body as js object 
 			//console.log(JSON.parse(data.toString('utf8')));

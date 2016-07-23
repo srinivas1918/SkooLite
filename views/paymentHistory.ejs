@@ -1,13 +1,17 @@
 
                   <div class="modal-header">
                     <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span></button>
-                    <span class="modal-title"><b>Payment History:</b>
+                    <span class="modal-title"><b>Payment History:
+                    <span class="text-green"><b> Total Fee: <%= payHistory.annualFee%>, </b></span>
+                    <span class="text-danger"><b>  Amount Paid: <%= payHistory.amountPaid%></b></span> 
+                    </b>
                      
                     </span>
+
                   </div>
 
  <div class="modal-body">
- 	<div class="row" id="paymentDetails">
+ 	<div class="row">
 <div class="col-md-12">
 	
 	<table class="table table-condensed" >
@@ -24,13 +28,19 @@
 		</thead>
 
 		<tbody>
+			<% var date=null%>
 			<% for (var i=0; i<payHistory.payments.length;i++){
 				%>
 				<tr>
 					<th><%= payHistory.payments[i].paymentMode%></th>
 					<td><%= payHistory.payments[i].paidBy%></td>
 					<td><%= payHistory.payments[i].paymentAmount%></td>
-					<td><%= payHistory.payments[i].paymentDate%></td>
+					<td>
+						<%
+						date = payHistory.payments[i].paymentDate;
+						%>
+ 					<%= date.getDate()+'-' + (date.getMonth()+1) +'-'+date.getFullYear();
+					%></td>
 				</tr>
 				<%}%>
 				
@@ -39,6 +49,9 @@
 	<input type="hidden" value="<%= payHistory._id%>" id="studentObje"> 
 </div>
 </div>
+<div class="row" id="paymentDetails" style="padding-left:15px;">
+
+</div>
 </div>
 
 <script type="text/javascript">
@@ -46,7 +59,7 @@
 		var studentId=$("#studentObje").val();
 		$.ajax({type:"GET",url:"/fees/paymentInfo/"+studentId,
 			success:function(resp){
-				$("#paymentDetails").append(resp);
+				$("#paymentDetails").html(resp);
 				console.log("appendd");
 			},error:function(ex){
 				alert(ex);

@@ -111,8 +111,7 @@ StudentService.prototype.searchStudent=function(data,callback){
 	var query={studentName:{$regex:new RegExp(data.studentName, 'ig')}};
 	query.school_id=data.school_id;
 	console.log(query);
-	var project={_id:1,studentName:1,section:1,classLevel:1,photoPath:1}
-	db.collection("students").find(query,project).limit(config.resultsLimit).toArray(function(err,result){
+	db.collection("students").find(query).limit(config.resultsLimit).toArray(function(err,result){
 		if(err){
 			return callback(new Error("Db excetpion"));
 		}

@@ -10,15 +10,15 @@ var config={
 
 	// SMS sending options
 	credentials:{
-		User:"XXXXX",
-		Password:"XXXX",
-		SenderId:"XXXX",
+		User:"mohan315",
+		Password:"Mohan315@",
+		SenderId:"NSPLAC",
 		Channel:"2",
 		DCS:"0",
 		SchedTime:null,
 		GroupId:null
 	},
-	URL:"XXXXX",
+	URL:"http://login.smsgatewayhub.com/RestAPI/MT.svc/mt",
 
 
 	// View page name that will be rendered to web client
@@ -30,7 +30,8 @@ var config={
 	feeRegForm:"feeRegForm",		// feeRegForm for the course 
 	schoolFeeInfo:"schoolFee",
 	paymentInfo:"paymentInfo",
-	paymentHistory:"paymentHistory"
+	paymentHistory:"paymentHistory",
+	events:"events"
 }
 
 module.exports=config;

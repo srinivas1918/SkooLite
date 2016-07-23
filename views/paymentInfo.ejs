@@ -1,9 +1,13 @@
 <!-- StudentFee info-->
 <div class="col-md-12">
 	<div class="row no-padding">
-		<h3>Fee Details :</h3>
+		<h3>Fee Details :
+			<a href="#" class="btn btn-success btn-xs" id="togglepayment">show</a>
+		</h3>
+		</DIV>
+
 	</div>
-	<table class="table table-condensed" style="width:50%;">
+	<table class="table table-condensed" style="width:50%;display:none;" id="PaymentTable" >
 		<tbody>
 			<% for (var i=0; i<result.courseFee.fee.length;i++){
 				%>
@@ -24,25 +28,67 @@
 <!-- StudentFee paid info-->
 <div class="col-md-12">
 <div class="row no-padding">
-		<h3>Payment Details :</h3>
+		<DIV class="col-md-9">
+		<h3>Payment Details :
+			<a href="#" class="btn btn-success btn-xs" id="toggledetails">show</a>
+		</h3>
+		</DIV>
 	</div>
-<table class="table table-condensed" style="width:80%;">
+<table class="table table-condensed" style="width:80%;display:none;" id="DetailsTable">
 	<thead>
 		<tr>
 			<th>Payment For</th>
 			<th>Paid Amount</th>
-			<th>Paid Date</th>
+			<th>Recent Paid Date</th>
 		</tr>
 	</thead>
 		<tbody>
+			<% var date=null%>
 			<% for (var i=0; i<paidInfo.length;i++){
 				%>
 				<tr>
 					<th class="text-success"><%= paidInfo[i].paymentMode%></th>
 					<td><%= paidInfo[i].amount%></td>
-					<td><%= paidInfo[i].date%></td>
+					<td><%
+					date = paidInfo[i].date;%>
+ 					<%= date.getDate()+'-' + (date.getMonth()+1) +'-'+date.getFullYear();
+					%></td>
 				</tr>
 				<%}%>
 		</tbody>
-	</table>	
+	</table>
 </div>
+<script type="text/javascript">
+$( "#togglepayment" ).click(function() {
+//alert($('#PaymentTable:visible').length);
+    if($('#PaymentTable:visible').length){
+    	$('#PaymentTable').hide("1000");
+    	$(this).addClass("btn-success");
+    	$(this).removeClass("btn-danger");
+    	$(this).html("show");
+    }
+    else{
+    	$('#PaymentTable').show("1000");
+    	$(this).removeClass("btn-success");
+    	$(this).addClass("btn-danger");
+    	$(this).html("hide");
+    }
+
+});
+$( "#toggledetails" ).click(function() {
+//alert($('#PaymentTable:visible').length);
+    if($('#DetailsTable:visible').length){
+    	$('#DetailsTable').hide("1000");
+    	$(this).addClass("btn-success");
+    	$(this).removeClass("btn-danger");
+    	$(this).html("show");
+    }
+    else{
+    	$('#DetailsTable').show("1000");
+    	$(this).removeClass("btn-success");
+    	$(this).addClass("btn-danger");
+    	$(this).html("hide");
+    }
+
+});
+</script>

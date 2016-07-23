@@ -1,3 +1,5 @@
+var viewing=null;
+var viewTab=null;
 $(function(){
 	console.log("doc loaded")
 	$("#studentLi").addClass("active");
@@ -8,10 +10,6 @@ $(function(){
 		$(this).removeClass('error');
 	});
 	$("#go").on("click",findStudents);
-	$('#studentInfo').on('hidden.bs.modal', function () {
-		console.log("Studne info hide");
-		 $("#studentInfo-body").html('');
-	});
 });
 
 //load the student table 
@@ -63,25 +61,59 @@ var findStudent=function(data){
 var showStudentInfo=function(student){
 	//console.log(student);
 	 $("#demo1").val('');
-
 	 $("#studentInfo").modal('show');
 	 $("#studentInfo-body").html(student);
 
 }
 
-var makePayment=function(id){
-
-	$.ajax({
+$('#studentInfo').on('hidden.bs.modal', function () {
+		//alert("Studne info hide "+viewing);
+		 $("#studentInfo-body").html('');
+		 if(viewing!=null){
+		 	//alert(viewTab)
+		 	if(viewTab=="makePayment"){
+		 		$.ajax({
 		type:"GET",
-		url:"/api/findStudent/"+id,
+		url:"/admin/makePaymentForStudent/"+viewing,
 		success:function(resp){
-			if(resp.status=='success'){
-				console.log("--");
-				
-				console.log(resp.result);
-			}else{
-				alert("Not Found this user");
-			}
+			$("#makePayment-body").html(resp);
+			$("#makePayment").modal("show");
+  			showPaymentInfo(viewing);
+  			viewing=null;
+		},
+		error:function(ex){
+			viewing=null;
 		}
+	})
+		 	}
+
+		 if(viewTab=="paymentHistory"){
+			$.ajax({
+		type:"GET",
+		url:"/fees/showPaymentHistory/"+viewing,
+		success:function(resp){
+			$("#paymentHistory").modal('show');
+			$("#paymentHistory-body").html(resp);
+		}
+	});		 	
+		 }	
+		 	
+		 }
+		 
+
 	});
-}
+
+$('#makePayment').on('hidden.bs.modal', function () {
+		console.log("makePayment info hide");
+		 $("#makePayment-body").html('');
+		 $("body").css("padding-right","0px");
+		 viewing=null;
+	});
+
+$('#paymentHistory').on('hidden.bs.modal', function () {
+		console.log("makePayment info hide");
+		 $("#paymentHistory-body").html('');
+		 $("body").css("padding-right","0px");
+		 viewing=null;
+	});
+

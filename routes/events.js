@@ -32,11 +32,10 @@ router.post("/saveEvent",function(req, resp, next){
 	
 	var todayDate=moment(new Date()).format("DD-MM-YYYY");
 	eventsObject.postDate=todayDate;
-
-	var eventDate=moment(eventsObject.eventDate, "YYYY-MM-DD");
-	//console.log(eventDate);
-	eventsObject.eventDate=new Date(eventDate);
-
+  	
+  	console.log("event start date :"+req.body.eventDate);
+    var eventDate=moment(req.body.eventDate,'DD-MM-YYYY').toDate();
+	eventsObject.eventDate=eventDate;
 	var school_id=req.session.school._id;
 	eventsObject.school_id=school_id;
 
@@ -50,15 +49,22 @@ router.post("/saveEvent",function(req, resp, next){
 	})
 });
 
-function reverse(s) {
-  if (s.length < 2)
-    return s;
-  var halfIndex = Math.ceil(s.length / 2);
-  return reverse(s.substr(halfIndex)) +
-         reverse(s.substr(0, halfIndex));
-}
-
-router.get("/getEvent",function(req,resp, next){
+router.get("/getEvent/:eventDate",function(req,resp, next){
+   console.log(req.params.eventDate);
+   var eventDate=moment(req.params.eventDate,'DD-MM-YYYY').toDate();
+   console.log(eventDate);
+   eventService.getEventByDate({'eventDate':eventDate},function(err, result){
+   		console.log(err);
+   			if(err){
+   				resp.sendStatus(500);
+   			}
+   			else
+   			{
+   				//console.log(result);
+   				resp.json({status:true, result:result});
+   			}
+   });
+  
 
 });
 

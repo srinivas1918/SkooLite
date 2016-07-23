@@ -1,21 +1,24 @@
 
                   <div class="modal-header">
+
                     <button aria-label="Close" data-dismiss="modal" class="close" type="button"><span aria-hidden="true">×</span></button>
-                    <span class="modal-title"><b>Student Info:</b>
-                      <div class="btn-group" style="margin-left:66%;">
+                    <span class="modal-title"><b>Student Info:&nbsp;&nbsp;&nbsp;</b>
+                    <span class="text-green"><b> Total Fee: <%= result.annualFee%></b>,</span>
+                    <span class="text-danger"><b>  Amount Paid: <%= result.amountPaid%></b></span>  
+                    </span>
+                    <div class="btn-group" style="margin-left:66%;margin-top:-44px;">
                       <button class="btn btn-warning btn-xs" type="button">Options</button>
                       <button data-toggle="dropdown" class="btn btn-warning dropdown-toggle btn-xs" type="button">
                         <span class="caret"></span>
                         <span class="sr-only">Toggle Dropdown</span>
                       </button>
                       <ul role="menu" class="dropdown-menu" style="margin-left:-100px;">
-                        <li><a href="#" onclick="makePayment('<%=result._id %>')">Make Payment</a></li>
-                        <li><a href="#" onclick="showPaymentHistory('<%=result._id %>')">Payment History</a></li>
+                        <li><a href="#" onclick="showPaymentModal('<%=result._id %>')">Make Payment</a></li>
+                        <li><a href="#" onclick="showPaymentHistory1('<%=result._id %>')">Payment History</a></li>
                         <li><a href="#" onclick="resendVFC('<%=result._id %>')">Resend VFC</a></li>
                         <li><a href="#">Send Message</a></li>
                       </ul>
         </div>
-                    </span>
                   </div>
                  
                   <div class="modal-body">
@@ -38,7 +41,7 @@
                         <tbody>
                              <tr>
                                 <td><img src='<%=result.photoPath %>' width='40px;' height='40px;' class='img-circle'/></td>
-                                <td><%= result.studentName %></td>
+                                <td><b class="text-green"><%= result.studentName %></b></td>
                                 <td><%= result.gender%>
                                 <td><%= result.classLevel %></td>
                                 <td><%= result.section %></td>
@@ -115,7 +118,16 @@
     showPaymentInfo('<%=result._id %>');
   });
   var showPaymentModal=function(studentId){
-    $("#studentInfo").modal('hide');
-    makePayment(studentId);
+    $("#studentInfo-body").html('');
+  $("#studentInfo").modal('hide');
+  viewing=studentId;
+  viewTab="makePayment";
   };
+  var showPaymentHistory1=function(studentId){
+  $("#studentInfo-body").html('');
+  $("#studentInfo").modal('hide');
+  viewing=studentId;
+  viewTab="paymentHistory";
+   
+}
   </script>                

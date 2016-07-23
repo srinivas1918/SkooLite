@@ -1,20 +1,35 @@
-var makePayment=function(studentId){
-	$("#studentInfo-body").html('');
-	$("#studentInfo").modal('hide');
+
+var makePayment=function(studentId,tab){
+	//alert("2")
 	$.ajax({
 		type:"GET",
 		url:"/admin/makePaymentForStudent/"+studentId,
 		success:function(resp){
 			$("#makePayment-body").html(resp);
-			$("#makePayment").modal('show');
+			$("#makePayment").modal("show");
   			showPaymentInfo(studentId);
+  			viewing=null;
+  			viewTab=null;
 		},
 		error:function(ex){
-
+			viewing=null;
+			viewTab=null;
 		}
 	})
 }
-
+var showPaymentHistory=function(studentId,tab){
+			viewing=null;
+  			viewTab=null;
+			//$("#paymentHistory-body").html('');
+	$.ajax({
+		type:"GET",
+		url:"/fees/showPaymentHistory/"+studentId,
+		success:function(resp){
+			$("#paymentHistory").modal('show');
+			$("#paymentHistory-body").html(resp);
+		}
+	});
+}
 var showPaymentInfo=function(studentId){
 	$.ajax({type:"GET",url:"/fees/paymentInfo/"+studentId,
 			success:function(resp){
@@ -108,6 +123,7 @@ var notify=$("input[name=notify]:checked").val();
 			bootbox.alert("<span class='text-success'> <b>Payment Done for the Student :"
 				+studentName+"</b></span>",function(){
 				//$("#makePayment").modal('hide');
+				
 				window.location.reload();
 
 			});
@@ -119,19 +135,7 @@ var notify=$("input[name=notify]:checked").val();
 	})
 }
 
-var showPaymentHistory=function(studentId){
-	$("#studentInfo-body").html('');
-	$("#studentInfo").modal('hide');
 
-	
-			//$("#paymentHistory-body").html('');
-	$.ajax({
-		type:"GET",
-		url:"/fees/showPaymentHistory/"+studentId,
-		success:function(resp){
-			$("#paymentHistory").modal('show');
-			$("#paymentHistory-body").html(resp);
-		}
-	});
-}
+
+
 

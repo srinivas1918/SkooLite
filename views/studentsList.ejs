@@ -43,8 +43,8 @@
                         <span class="sr-only">Toggle Dropdown</span>
                       </button>
                       <ul role="menu" class="dropdown-menu" style="margin-left:-100px;">
-                        <li><a href="#" onclick="makePayment('<%=result[i]._id %>')">Make Payment</a></li>
-                        <li><a href="#" onclick="showPaymentHistory('<%=result[i]._id %>')">Payment History</a></li>
+                        <li><a href="#" onclick="makePayment('<%=result[i]._id %>','makePayment')">Make Payment</a></li>
+                        <li><a href="#" onclick="showPaymentHistory('<%=result[i]._id %>','paymentHistory')">Payment History</a></li>
                         <li><a href="#" onclick="resendVFC('<%=result[i]._id %>')">Resend VFC</a></li>
                         <li><a href="#">Send Message</a></li>
                       </ul>
