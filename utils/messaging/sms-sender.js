@@ -18,7 +18,7 @@ var options_proxy={
 	}
 var Client = require('node-rest-client').Client;
  
-client = new Client(options_proxy);
+client = new Client();
 var SMSHelper=function(){}
 
 SMSHelper.prototype.sendMessage = function(object,callback) {

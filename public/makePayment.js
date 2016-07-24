@@ -1,10 +1,12 @@
 
 var makePayment=function(studentId,tab){
 	//alert("2")
+	$(".loader").fadeIn('slow');
 	$.ajax({
 		type:"GET",
 		url:"/admin/makePaymentForStudent/"+studentId,
 		success:function(resp){
+			$(".loader").fadeOut();
 			$("#makePayment-body").html(resp);
 			$("#makePayment").modal("show");
   			showPaymentInfo(studentId);
@@ -20,13 +22,19 @@ var makePayment=function(studentId,tab){
 var showPaymentHistory=function(studentId,tab){
 			viewing=null;
   			viewTab=null;
+  			$(".loader").fadeIn('slow');
 			//$("#paymentHistory-body").html('');
 	$.ajax({
 		type:"GET",
 		url:"/fees/showPaymentHistory/"+studentId,
 		success:function(resp){
+			$(".loader").fadeOut();
 			$("#paymentHistory").modal('show');
 			$("#paymentHistory-body").html(resp);
+		},
+		error:function(ex){
+			alert("error! Please check your internet/ Contact admin");
+			$(".loader").fadeOut();
 		}
 	});
 }

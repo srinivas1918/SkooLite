@@ -16,7 +16,7 @@ var dbInstance=require("./db.js").dbOparations.db;
 var app = express();
 
 //server port and ip addr
-var PORT = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var PORT = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 var IPADDRESS = process.env.OPENSHIFT_NODEJS_IP || 'localhost';
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

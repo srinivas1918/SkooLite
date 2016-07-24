@@ -49,6 +49,28 @@ router.post("/saveEvent",function(req, resp, next){
 	})
 });
 
+router.get("/loadEvents",function(req,resp,next){
+	
+	eventService.listEvents({school_id:req.session.school._id,eventDate:{$gt:new Date()}},function(err,result){
+		if(err){
+			resp.json({status:false,result:err});
+		}else{
+			resp.json({status:true, result:result}).end();
+		}
+	});
+});
+
+router.get("/loadCompleted",function(req,resp,next){
+	
+	eventService.listEvents({school_id:req.session.school._id,eventDate:{$lt:new Date()}},function(err,result){
+		if(err){
+			resp.json({status:false,result:err});
+		}else{
+			resp.json({status:true, result:result}).end();
+		}
+	});
+});
+
 router.get("/getEvent/:eventDate",function(req,resp, next){
    console.log(req.params.eventDate);
    var eventDate=moment(req.params.eventDate,'DD-MM-YYYY').toDate();

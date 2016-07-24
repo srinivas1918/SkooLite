@@ -55,7 +55,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                   <li class="active"><a data-toggle="tab" href="#fa-icons">Post Event</a></li>
-                  <li><a data-toggle="tab" href="#glyphicons">View Events</a></li>
+                  <li><a data-toggle="tab" href="#glyphicons" id="viewEvents">View Events</a></li>
+                   <li><a data-toggle="tab" href="#completed" id="completedEvents">Past Events</a></li>
                 </ul>
                 <div class="tab-content">
                   <!-- Font Awesome icons -->
@@ -67,7 +68,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <div class="form-group row">
                       <label for="classLevel" class="col-xs-3">CLass</label>
                        <div class="col-xs-6">
-                       <select id="classLevel" name="classLevel" class="required">
+                       <select id="classLevel" name="classLevel" class="form-control required">
                           <option value="">--select--</option>
                           <option value="I">I</option>
                           <option value="II">II</option>
@@ -154,12 +155,58 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
                     <div class="row">
                       
-
+                        <div class="col-md-12">
+                          <div class="col-md-4">
+                              <label class="col-md-5">Events From :</label>
+                              <div class="col-md-7">
+                                <input class="form-control" type="text" id="from"/>
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                              <label class="col-md-5">Events To :</label>
+                              <div class="col-md-7">
+                                  <input class="form-control" type="text" id="to"/>
+                              </div>
+                          </div>
+                          <div class="col-md-4">
+                            <button class="btn btn-primary" value="Search">Search</button>
+                          </div>
+                        </div>
                       
                     </div>
-                    
+                    <div class="row" id="eventsData">
+                        <table class="table no-margin" id="records_table">
+                            <thead>
+                              <tr>
+                                <th>#NO</th>
+                                <th>Event Title</th>
+                                <th>Description</th>
+                                <th>Class</th>
+                                <th>Start Date</th>
+                                <th>Start Time</th>
+                                <th>Location</th>
+                              </tr>
+                            </thead>
+                    </table>
+                    </div>
                   </div><!-- /#ion-icons -->
-
+                  <div id="completed" class="tab-pane">
+                      <div class="row" id="eventsDoneData">
+                        <table class="table no-margin" id="records_table1">
+                            <thead>
+                              <tr>
+                                <th>#NO</th>
+                                <th>Event Title</th>
+                                <th>Description</th>
+                                <th>Class</th>
+                                <th>Start Date</th>
+                                <th>Start Time</th>
+                                <th>Location</th>
+                              </tr>
+                            </thead>
+                    </table>
+                    </div>
+                  </div>
                 </div><!-- /.tab-content -->
               </div><!-- /.nav-tabs-custom -->
             </div><!-- /.col -->
@@ -190,6 +237,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
        $(function(){
         $("#eventLi").addClass('active');
         $('input[name=eventDate]').datetimepicker({format: 'DD-MM-YYYY'});
+         $('#from').datetimepicker({format: 'DD-MM-YYYY'});
+          $('#to').datetimepicker({format: 'DD-MM-YYYY'});
         $('input[name=eventTime]').datetimepicker({
             format: "hh:mm A"
         });

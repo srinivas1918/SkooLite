@@ -1,6 +1,6 @@
 $(function(){
 	console.log('doc loaded');
-
+	
 	$("button[name=submit]").on("click", saveEvent);
 
 	$("input[name=eventDate]").on("dp.change",function(){
@@ -11,11 +11,82 @@ $(function(){
 	$('.required').on('focus',function(){
 		$(this).removeClass("error");
 	});
+
+	var table;
+	table = $('#records_table').DataTable({
+    bLengthChange: false,
+    paging: false
+   });
+
+	$("#viewEvents").on("click",function(){
+		console.log("loadEvents")
+		loadEvents(table);
+	});
+
+	var table1;
+	table1 = $('#records_table1').DataTable({
+    bLengthChange: false,
+    paging: false
+   });
+	$("#completedEvents").on("click",function(){
+		$.ajax({
+		type:"GET",
+		url:"/events/loadCompleted",
+		success:function(response){
+			console.log(response);
+			if(response.status)
+			createTable(response, table1);
+        	else{
+        		alert("error");
+        	}
+		},
+		error:function(ex){
+			alert("Error check your internet/ Contact your admin");
+		}
+	})
+	});
 	/*$(".required").on("focus",function(){
 		$(this).removeClass("error");
 	});*/
 });
 
+var loadEvents=function(table){
+	
+	$.ajax({
+		type:"GET",
+		url:"/events/loadEvents",
+		success:function(response){
+			console.log(response);
+			if(response.status)
+			createTable(response, table);
+        	else{
+        		alert("error");
+        	}
+		},
+		error:function(ex){
+			alert("Error check your internet/ Contact your admin");
+		}
+	})
+}
+
+var createTable=function(data, table){
+	      table.clear();
+          $.each(data.result, function(i, item) {
+           console.log("inserting", item);
+         //  console.log(item.eventDate);
+           var date=new Date(item.eventDate);
+           //console.log( date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear());
+           table.row.add([
+             i+1,
+             item.eventTitle,
+             item.eventDesc,
+             item.classLevel,
+             date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear(),
+             item.eventTime,
+             item.eventLocation
+           ]).draw();
+         });
+}
 var saveEvent=function(){
 	var isValid=new Validate(".required").require();
 	if(isValid){

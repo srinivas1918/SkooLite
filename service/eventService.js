@@ -18,7 +18,7 @@ EventService.prototype.saveEvent = function(eventObject,callback) {
 
 EventService.prototype.listEvents=function(obj,callback){
 
-	db.collection.find(obj,function(err,result){
+	db.collection("events").find(obj).sort({eventDate:1}).toArray(function(err,result){
 
 		if(err){
 			return callback(new Error("Database err"))
